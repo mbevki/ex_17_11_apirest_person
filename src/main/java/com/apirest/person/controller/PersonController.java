@@ -47,4 +47,52 @@ public class PersonController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/persons/{id}")
+    public ResponseEntity<Person> getPersonById(@PathVariable("id") long id){
+        Person person = personService.getPersonById(id);
+
+        if(person != null){
+            return new ResponseEntity<>(person, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/persons/{id}")
+    public ResponseEntity<Person> updatePerson(@PathVariable("id") long id, @RequestBody Person person){
+        Person _person = personService.updatePersonById(id, person);
+
+        if(_person != null){
+            return new ResponseEntity<>(personService.savePerson(_person), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/persons/{id}")
+    public ResponseEntity<HttpStatus>  deletePersonById (@PathVariable("id") long id){
+        try{
+            personService.deletePersonById(id);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/persons")
+    public ResponseEntity<HttpStatus>  deleteAllPerson (){
+        try{
+            personService.deleteAllPerson();
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 }
