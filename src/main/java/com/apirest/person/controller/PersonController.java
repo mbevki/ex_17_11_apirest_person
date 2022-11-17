@@ -19,7 +19,7 @@ public class PersonController {
     @PostMapping("/persons")
     public ResponseEntity<Person> addPerson(@RequestBody Person person){
         try {
-            Person _person = personService.savePerson(new Person(person.getFirstName(), person.getLastName(), person.getEmail(), person.getPhoneNum(), person.getDateOfBirth()));
+            Person _person = personService.savePerson(new Person(person.getFirstName(), person.getLastName(), person.getAge(), person.getEmail(), person.getPhoneNum(), person.getDateOfBirth()));
 
             return new ResponseEntity<>(_person, HttpStatus.CREATED);
         } catch (Exception e) {
